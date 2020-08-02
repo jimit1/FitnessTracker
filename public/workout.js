@@ -35,9 +35,18 @@ function tallyExercises(exercises) {
 }
 
 function formatDate(date) {
-  let date2 = new Date(date * 1000).toLocaleDateString();
+  let date2 = new Date(date).toLocaleString();
   return date2;
 }
+
+//This is a bad formatDate function provided by you
+// function formatDate(date) {
+//   const options = {
+//     weekday: "long",
+//     year: "numeric",
+//     month: "long",
+//     day: "numeric"
+//   };
 
 function renderWorkoutSummary(summary) {
   const container = document.querySelector(".workout-stats");

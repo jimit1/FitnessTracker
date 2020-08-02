@@ -141,11 +141,12 @@ if (workoutTypeSelect) {
 }
 if (completeButton) {
   completeButton.addEventListener("click", function (event) {
-    // shouldNavigateAway = true;
+    shouldNavigateAway = true;
     handleFormSubmit(event);
   });
 }
 if (addButton) {
+  shouldNavigateAway = true;
   addButton.addEventListener("click", handleFormSubmit);
 }
 toast.addEventListener("animationend", handleToastAnimationEnd);
