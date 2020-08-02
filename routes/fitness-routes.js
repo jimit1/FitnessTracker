@@ -5,12 +5,11 @@ const {
   editWorkout,
   deleteWorkout,
 } = require("../controllers/fitness-controller");
-// const apiRoute = "/api/workouts";
 
 router
   .get("/api/workouts", getWorkout)
-  .put("/api/workouts/:id", newWorkout)
-  .post("/api/workouts", editWorkout)
+  .put("/api/workouts/:id", editWorkout)
+  .post("/api/workouts", newWorkout)
   .delete("/api/workouts", deleteWorkout);
 
 router.get("/api/workouts/range", getWorkout);
