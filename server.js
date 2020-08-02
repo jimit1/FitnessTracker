@@ -7,16 +7,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitness_db", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false,
   useCreateIndex: true,
 });
 
-// const apiRoutes = require("./routes/api-routes.js");
+const apiRoutes = require("./routes/fitness-routes");
 const clientRoutes = require("./routes/client-routes.js");
-
+app.use(apiRoutes);
 app.use(clientRoutes);
 
 app.listen(PORT, () => console.log(`listening at http://localhost:${PORT}`));
