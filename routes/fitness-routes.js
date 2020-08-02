@@ -9,10 +9,10 @@ const {
 
 router
   .get("/api/workouts", getWorkout)
-  .post("/api/workouts", newWorkout)
-  .put("/api/workouts", editWorkout)
+  .put("/api/workouts/:id", newWorkout)
+  .post("/api/workouts", editWorkout)
   .delete("/api/workouts", deleteWorkout);
 
-// router.get("/api/workouts/range", getWorkout);
+router.get("/api/workouts/range", getWorkout);
 
 module.exports = router;
