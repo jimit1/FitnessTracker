@@ -2,23 +2,13 @@ const db = require("../models/fitness");
 
 module.exports = {
   newWorkout: (req, res) => {
-    const newWorkout = {
-      day: new Date().getTime(),
-      exercises: [
-        {
-          type: req.body.type,
-          name: req.body.name,
-          duration: req.body.duration,
-          distance: req.body.distance,
-          weight: req.body.weight,
-          sets: req.body.sets,
-          reps: req.body.reps,
-        },
-      ],
-    };
-    db.Workout.create(newWorkout)
-      .then((result) => res.send(result))
-      .catch((err) => res.send(err));
+    db.Workout.create(req.body)
+      .then((workout) => {
+        res.send(workout);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
   },
 
   getWorkout: (req, res) =>
@@ -30,25 +20,20 @@ module.exports = {
           .then((foundworkout) => res.send(foundworkout))
           .catch((err) => res.send(err)),
 
-  editWorkout: (req, res) => {
-    console.log(req.body);
-    const newWorkout = {
-      day: new Date().getTime(),
-      exercises: [
-        {
-          type: req.body.type,
-          name: req.body.name,
-          duration: req.body.duration,
-          distance: req.body.distance,
-          weight: req.body.weight,
-          sets: req.body.sets,
-          reps: req.body.reps,
-        },
-      ],
-    };
-    db.Workout.findByIdAndUpdate(req.params.id, newWorkout)
-      .then(() => res.send({ msg: "success" }))
-      .catch((err) => res.send(err));
+  addExercise: async (req, res) => {
+    try {
+      const workout = await db.Workout.findById(req.params.id);
+      workout.exercises.push(req.body);
+      let totalDuration = 0;
+      await workout.exercises.forEach((exercise) => {
+        totalDuration += exercise.duration;
+      });
+      workout.totalDuration = totalDuration;
+      await workout.save();
+      res.send(workout);
+    } catch (error) {
+      res.send(error);
+    }
   },
 
   deleteWorkout: (req, res) =>

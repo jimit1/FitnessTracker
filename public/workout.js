@@ -8,19 +8,18 @@ async function initWorkout() {
 
     const workoutSummary = {
       date: formatDate(lastWorkout.day),
-      totalDuration: lastWorkout.exercises[0].duration,
-      numExercises: lastWorkout.exercises[0].name,
-      ...tallyExercises(lastWorkout.exercises),
+      totalDuration: lastWorkout.totalDuration,
+      numExercises: lastWorkout.exercises.length,
+      ...tallyExercises(lastWorkout.exercises)
     };
-    console.log(workoutSummary);
+
     renderWorkoutSummary(workoutSummary);
   } else {
-    renderNoWorkoutText();
+    renderNoWorkoutText()
   }
 }
 
 function tallyExercises(exercises) {
-  console.log(exercises);
   const tallied = exercises.reduce((acc, curr) => {
     if (curr.type === "resistance") {
       acc.totalWeight = (acc.totalWeight || 0) + curr.weight;
@@ -35,18 +34,15 @@ function tallyExercises(exercises) {
 }
 
 function formatDate(date) {
-  let date2 = new Date(date).toLocaleString();
-  return date2;
-}
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  };
 
-//This is a bad formatDate function provided by you
-// function formatDate(date) {
-//   const options = {
-//     weekday: "long",
-//     year: "numeric",
-//     month: "long",
-//     day: "numeric"
-//   };
+  return new Date(date).toLocaleDateString(options);
+}
 
 function renderWorkoutSummary(summary) {
   const container = document.querySelector(".workout-stats");
@@ -58,10 +54,10 @@ function renderWorkoutSummary(summary) {
     totalWeight: "Total Weight Lifted",
     totalSets: "Total Sets Performed",
     totalReps: "Total Reps Performed",
-    totalDistance: "Total Distance Covered",
+    totalDistance: "Total Distance Covered"
   };
 
-  Object.keys(summary).forEach((key) => {
+  Object.keys(summary).forEach(key => {
     const p = document.createElement("p");
     const strong = document.createElement("strong");
 
@@ -79,7 +75,7 @@ function renderNoWorkoutText() {
   const container = document.querySelector(".workout-stats");
   const p = document.createElement("p");
   const strong = document.createElement("strong");
-  strong.textContent = "You have not created a workout yet!";
+  strong.textContent = "You have not created a workout yet!"
 
   p.appendChild(strong);
   container.appendChild(p);

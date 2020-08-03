@@ -146,7 +146,6 @@ if (completeButton) {
   });
 }
 if (addButton) {
-  shouldNavigateAway = true;
   addButton.addEventListener("click", handleFormSubmit);
 }
 toast.addEventListener("animationend", handleToastAnimationEnd);
